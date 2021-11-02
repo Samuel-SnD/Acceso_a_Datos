@@ -46,7 +46,8 @@ public class Controller {
                 case 13: verEmpleadoSalDept(); break;
                 case 14: verEmpleadosMinus(); break;
                 case 15: insertarFamiliares(); break;
-                case 16: salir = true; break;
+                case 16: actualizarComisiones(); break;
+                case 17: salir = true; break;
                 default: System.out.println("Opción no válida"); break;
             }
         }
@@ -233,6 +234,17 @@ public class Controller {
             List <Familiar> fam = famDAO.getByEmp(cod1, mySQLFactory.getConnection());
             for (int i = 0; i < fam.size(); i++) {
                 System.out.println(fam.get(i).toString());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void actualizarComisiones () {
+        try {
+            List <Empleado> emp = empDAO.actualizarComisiones(mySQLFactory.getConnection());
+            for (int i = 0; i < emp.size(); i++) {
+                System.out.println(emp.get(i).toString());
             }
         } catch (Exception e) {
             e.printStackTrace();

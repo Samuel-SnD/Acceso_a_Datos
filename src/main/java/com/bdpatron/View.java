@@ -21,7 +21,8 @@ public class View {
         System.out.println("13) Buscar empleado por salario y departamento");
         System.out.println("14) Mostrar empleados en minúsculas");
         System.out.println("15) Insertar familiares empleados");
-        System.out.println("16) Salir");
+        System.out.println("16) Actualizar comisiones");
+        System.out.println("17) Salir");
         int opc = Integer.parseInt(teclado.nextLine());
         return opc;
     }

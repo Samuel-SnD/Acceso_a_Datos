@@ -218,4 +218,72 @@ public class EmpleadoDAO implements DAO <Empleado> {
         }
         return lista;
     }
+
+    public List <Empleado> actualizarComisiones (Connection con) {
+        List <Empleado> lista = null;
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT * from EMP where EMPNO in (SELECT mgr FROM emp where mgr is not null);", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = ps.executeQuery();
+            List <Empleado> emps = getByMgr(con);
+            while (rs.next()) {
+                for (int i = 0; i < emps.size(); i++ ) {
+                    if (emps.get(i).getMgr() == rs.getInt(1)) {
+                        rs.updateFloat("COMM", emps.get(i).getComm() * 2);
+                        rs.updateRow();
+                    }
+                }
+            }
+            Statement s = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs2 = s.executeQuery("SELECT * from EMP where EMPNO in (SELECT mgr FROM emp where mgr is not null);");
+            int totalRows = 0;
+            rs2.last();
+            totalRows = rs2.getRow();
+            rs2.beforeFirst();
+            lista = new ArrayList<Empleado>(totalRows);
+            while(rs2.next()) {
+                Empleado emp = new Empleado();
+                emp.setEmpno(rs2.getInt(1));
+                emp.setEname(rs2.getString(2));
+                emp.setJob(rs2.getString(3));
+                emp.setMgr(rs2.getInt(4));
+                emp.setHiredate(LocalDate.parse(rs2.getString(5)));
+                emp.setSal(rs2.getFloat(6));
+                emp.setComm(rs2.getFloat(7));
+                emp.setDeptno(rs2.getInt(8));
+                lista.add(emp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+
+    public List <Empleado> getByMgr (Connection con) {
+        List <Empleado> lista = null;
+        try {
+            Statement s = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = s.executeQuery("SELECT * FROM EMP where mgr is not null;");
+            int totalRows = 0;
+            rs.last();
+            totalRows = rs.getRow();
+            rs.beforeFirst();
+            lista = new ArrayList<Empleado>(totalRows);
+            while(rs.next()) {
+                Empleado emp = new Empleado();
+                emp.setEmpno(rs.getInt(1));
+                emp.setEname(rs.getString(2));
+                emp.setJob(rs.getString(3));
+                emp.setMgr(rs.getInt(4));
+                emp.setHiredate(LocalDate.parse(rs.getString(5)));
+                emp.setSal(rs.getFloat(6));
+                emp.setComm(rs.getFloat(7));
+                emp.setDeptno(rs.getInt(8));
+                lista.add(emp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+
 }
