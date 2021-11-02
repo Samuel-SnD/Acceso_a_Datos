@@ -26,7 +26,9 @@ public class View {
         System.out.println("18) Mostrar vistas departamentos");
         System.out.println("19) Crear vistas jefes");
         System.out.println("20) Mostrar vistas jefes");
-        System.out.println("21) Salir");
+        System.out.println("21) Mostrar número de jefes");
+        System.out.println("22) Mostrar nombre de empleado por empno");
+        System.out.println("23) Salir");
         int opc = Integer.parseInt(teclado.nextLine());
         return opc;
     }

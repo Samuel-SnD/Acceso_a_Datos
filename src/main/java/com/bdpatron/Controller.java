@@ -51,7 +51,9 @@ public class Controller {
                 case 18: mostrarVistasDept(); break;
                 case 19: crearVistasJefes(); break;
                 case 20: mostrarVistasJefes(); break;
-                case 21: salir = true; break;
+                case 21: mostrarNumJefes(); break;
+                case 22: mostrarNombreEmp(); break;
+                case 23: salir = true; break;
                 default: System.out.println("Opción no válida"); break;
             }
         }
@@ -282,6 +284,24 @@ public class Controller {
     public static void mostrarVistasJefes () {
         try {
             empDAO.verVistasJefes(mySQLFactory.getConnection());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void mostrarNumJefes () {
+        try {
+            empDAO.getNumJefes(mySQLFactory.getConnection());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void mostrarNombreEmp () {
+        try {
+            System.out.println("Indica el número del empleado: ");
+            int num = Integer.parseInt(teclado.nextLine());
+            empDAO.getNombreEmp(num, mySQLFactory.getConnection());
         } catch (Exception e) {
             e.printStackTrace();
         }

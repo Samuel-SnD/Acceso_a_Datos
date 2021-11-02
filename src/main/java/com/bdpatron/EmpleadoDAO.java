@@ -1,5 +1,6 @@
 package com.bdpatron;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -358,6 +359,31 @@ public class EmpleadoDAO implements DAO <Empleado> {
                 System.out.println(rs2.getFloat(5));
                 System.out.println(rs2.getFloat(6));
                 System.out.println(LocalDate.parse(rs2.getString(7)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getNumJefes (Connection con) {
+        try {
+            CallableStatement cs = con.prepareCall("{call GETNUMJEFES()}");
+            ResultSet result = cs.executeQuery();
+            while (result.next()) {
+                System.out.println("Número de jefes: " + result.getInt(1));    
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getNombreEmp (int num, Connection con) {
+        try {
+            CallableStatement cs = con.prepareCall("{call GETNOMBREEMP(?)}");
+            cs.setInt(1, num);
+            ResultSet result = cs.executeQuery();
+            while (result.next()) {
+                System.out.println("Nombre del empleado con número: " + num + " = " + result.getString(1));
             }
         } catch (Exception e) {
             e.printStackTrace();
