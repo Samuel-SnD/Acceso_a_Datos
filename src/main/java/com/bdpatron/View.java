@@ -22,7 +22,11 @@ public class View {
         System.out.println("14) Mostrar empleados en minúsculas");
         System.out.println("15) Insertar familiares empleados");
         System.out.println("16) Actualizar comisiones");
-        System.out.println("17) Salir");
+        System.out.println("17) Crear vistas departamentos");
+        System.out.println("18) Mostrar vistas departamentos");
+        System.out.println("19) Crear vistas jefes");
+        System.out.println("20) Mostrar vistas jefes");
+        System.out.println("21) Salir");
         int opc = Integer.parseInt(teclado.nextLine());
         return opc;
     }

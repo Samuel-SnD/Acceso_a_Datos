@@ -47,7 +47,11 @@ public class Controller {
                 case 14: verEmpleadosMinus(); break;
                 case 15: insertarFamiliares(); break;
                 case 16: actualizarComisiones(); break;
-                case 17: salir = true; break;
+                case 17: crearVistasDept(); break;
+                case 18: mostrarVistasDept(); break;
+                case 19: crearVistasJefes(); break;
+                case 20: mostrarVistasJefes(); break;
+                case 21: salir = true; break;
                 default: System.out.println("Opción no válida"); break;
             }
         }
@@ -246,6 +250,38 @@ public class Controller {
             for (int i = 0; i < emp.size(); i++) {
                 System.out.println(emp.get(i).toString());
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void crearVistasDept () {
+        try {
+            empDAO.crearVistaDepts(mySQLFactory.getConnection());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void mostrarVistasDept () {
+        try {
+            empDAO.verVistas(mySQLFactory.getConnection());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void crearVistasJefes () {
+        try {
+            empDAO.crearVistasJefes(mySQLFactory.getConnection());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static void mostrarVistasJefes () {
+        try {
+            empDAO.verVistasJefes(mySQLFactory.getConnection());
         } catch (Exception e) {
             e.printStackTrace();
         }

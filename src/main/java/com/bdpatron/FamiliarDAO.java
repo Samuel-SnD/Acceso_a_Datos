@@ -59,8 +59,7 @@ public class FamiliarDAO implements DAO<Familiar> {
     public List<Familiar> getByEmp(int emp, Connection con) {
         List<Familiar> lista = null;
         try {
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM familiares where pariente = ?;",
-                    ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM familiares where pariente = ?;", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ps.setInt(1, emp);
             ResultSet rs = ps.executeQuery();
             int totalRows = 0;

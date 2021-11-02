@@ -286,4 +286,82 @@ public class EmpleadoDAO implements DAO <Empleado> {
         return lista;
     }
 
+    public void crearVistaDepts (Connection con) {
+        try {
+            Statement s = con.createStatement();
+            s.execute("CREATE OR REPLACE VIEW viewDept10(deptno, dname, empno, ename, job, sal, comm, hiredate) as SELECT d.deptno, dname, empno, ename, job, sal, comm, hiredate from dept d NATURAL JOIN emp e where deptno = 10;");
+            s.execute("CREATE OR REPLACE VIEW viewDept30(deptno, dname, empno, ename, job, sal, comm, hiredate) as SELECT d.deptno, dname, empno, ename, job, sal, comm, hiredate from dept d NATURAL JOIN emp e where deptno = 30;");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void verVistas (Connection con) {
+        try {
+            Statement s = con.createStatement();
+            ResultSet rs = s.executeQuery("SELECT * FROM viewDept10");
+            while (rs.next()) {
+                System.out.println(rs.getInt(1));
+                System.out.println(rs.getString(2));
+                System.out.println(rs.getInt(3));
+                System.out.println(rs.getString(4));
+                System.out.println(rs.getString(5));
+                System.out.println(rs.getFloat(6));
+                System.out.println(rs.getFloat(7));
+                System.out.println(LocalDate.parse(rs.getString(8)));
+            }
+            ResultSet rs2 = s.executeQuery("SELECT * FROM viewDept30");
+            while (rs2.next()) {
+                System.out.println(rs2.getInt(1));
+                System.out.println(rs2.getString(2));
+                System.out.println(rs2.getInt(3));
+                System.out.println(rs2.getString(4));
+                System.out.println(rs2.getString(5));
+                System.out.println(rs2.getFloat(6));
+                System.out.println(rs2.getFloat(7));
+                System.out.println(LocalDate.parse(rs2.getString(8)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void crearVistasJefes (Connection con) {
+        try {
+            Statement s = con.createStatement();
+            s.execute("CREATE OR REPLACE VIEW viewJefes(deptno, empno, ename, job, sal, comm, hiredate) as SELECT deptno, empno, ename, job, sal, comm, hiredate from emp where empno in (select mgr from emp where mgr is not null);");
+            s.execute("CREATE OR REPLACE VIEW viewEmp(deptno, empno, ename, job, sal, comm, hiredate) as SELECT deptno, empno, ename, job, sal, comm, hiredate from emp where empno in (select mgr from emp where mgr is null);");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void verVistasJefes (Connection con) {
+        try {
+            Statement s = con.createStatement();
+            ResultSet rs = s.executeQuery("SELECT * FROM viewJefes");
+            while (rs.next()) {
+                System.out.println(rs.getInt(1));
+                System.out.println(rs.getInt(2));
+                System.out.println(rs.getString(3));
+                System.out.println(rs.getString(4));
+                System.out.println(rs.getFloat(5));
+                System.out.println(rs.getFloat(6));
+                System.out.println(LocalDate.parse(rs.getString(7)));
+            }
+            ResultSet rs2 = s.executeQuery("SELECT * FROM viewEmp");
+            while (rs2.next()) {
+                System.out.println(rs2.getInt(1));
+                System.out.println(rs2.getInt(2));
+                System.out.println(rs2.getString(3));
+                System.out.println(rs2.getString(4));
+                System.out.println(rs2.getFloat(5));
+                System.out.println(rs2.getFloat(6));
+                System.out.println(LocalDate.parse(rs2.getString(7)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
