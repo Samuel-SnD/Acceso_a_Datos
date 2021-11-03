@@ -7,8 +7,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class FamiliarDAO implements DAO<Familiar> {
+
+    static Scanner teclado = new Scanner (System.in);
 
     @Override
     public Familiar get(long id, Connection con) {
@@ -100,5 +103,27 @@ public class FamiliarDAO implements DAO<Familiar> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void insertarLote (Connection con) {
+        try {
+            PreparedStatement ps = con.prepareStatement("INSERT INTO proyectos (fcode, fname, fpar, edad, pariente) VALUES (?, ?, ?, ?, ?);" , ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            for (int i = 0; i < 3; i++) {
+                System.out.println("Inserte número familiar: ");
+                ps.setInt(1, Integer.parseInt(teclado.nextLine()));
+                System.out.println("Inserte nombre familiar: ");
+                ps.setString(2, teclado.nextLine());
+                System.out.println("Inserte parentesco familiar: ");
+                ps.setString(3, teclado.nextLine());
+                System.out.println("Inserte edad familiar: ");
+                ps.setInt(4, Integer.parseInt(teclado.nextLine()));
+                System.out.println("Inserte número pariente: ");
+                ps.setInt(5, Integer.parseInt(teclado.nextLine()));
+                ps.addBatch();
+            }
+            ps.executeBatch();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
     }
 }

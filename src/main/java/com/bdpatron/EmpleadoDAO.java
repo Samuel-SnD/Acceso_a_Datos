@@ -9,8 +9,11 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class EmpleadoDAO implements DAO <Empleado> {
+    
+    static Scanner teclado = new Scanner (System.in);
     
     @Override
     public Empleado get (long id, Connection con) {
@@ -385,6 +388,40 @@ public class EmpleadoDAO implements DAO <Empleado> {
             while (result.next()) {
                 System.out.println("Nombre del empleado con número: " + num + " = " + result.getString(1));
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertarLote (Connection con) {
+        try {
+            PreparedStatement ps = con.prepareStatement("INSERT INTO EMP (empno, ename, job, mgr, hiredate, sal, comm, deptno) VALUES (?, ?, ?, ?, ?, ?, ?, ?);" , ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            for (int i = 0; i < 3; i++) {
+                System.out.println("Inserte número empleado: ");
+                ps.setInt(1, Integer.parseInt(teclado.nextLine()));
+                System.out.println("Inserte nombre empleado: ");
+                ps.setString(2, teclado.nextLine());
+                System.out.println("Inserte trabajo empleado: ");
+                ps.setString(3, teclado.nextLine());
+                System.out.println("Inserte mgr empleado: ");
+                ps.setInt(4, Integer.parseInt(teclado.nextLine()));
+                System.out.println("Inserte día contratación empleado: ");
+                int dia = Integer.parseInt(teclado.nextLine());
+                System.out.println("Inserte mes contratación empleado: ");
+                int mes = Integer.parseInt(teclado.nextLine());
+                System.out.println("Inserte año contratación empleado: ");
+                int año = Integer.parseInt(teclado.nextLine());
+                LocalDate fecha = LocalDate.of(año, mes, dia);
+                ps.setString(5, fecha.toString());
+                System.out.println("Inserte salario del empleado: ");
+                ps.setFloat(6, Float.parseFloat(teclado.nextLine()));
+                System.out.println("Inserte comisiones del empleado: ");
+                ps.setFloat(7, Float.parseFloat(teclado.nextLine()));
+                System.out.println("Inserte número de departamento del empleado: ");
+                ps.setInt(8, Integer.parseInt(teclado.nextLine()));
+                ps.addBatch();
+            }
+            ps.executeBatch();
         } catch (Exception e) {
             e.printStackTrace();
         }

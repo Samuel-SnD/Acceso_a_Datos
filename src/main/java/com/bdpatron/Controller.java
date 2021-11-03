@@ -53,7 +53,11 @@ public class Controller {
                 case 20: mostrarVistasJefes(); break;
                 case 21: mostrarNumJefes(); break;
                 case 22: mostrarNombreEmp(); break;
-                case 23: salir = true; break;
+                case 23: añadirTresEmp(); break;
+                case 24: añadirTresDept(); break;
+                case 25: añadirTresProy(); break;
+                case 26: añadirTresFam(); break;
+                case 27: salir = true; break;
                 default: System.out.println("Opción no válida"); break;
             }
         }
@@ -307,4 +311,35 @@ public class Controller {
         }
     }
 
+    public static void añadirTresEmp () {
+        try {
+            empDAO.insertarLote(mySQLFactory.getConnection());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void añadirTresDept () {
+        try {
+            deptDAO.insertarLote(mySQLFactory.getConnection());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void añadirTresProy () {
+        try {
+            proyDAO.insertarLote(mySQLFactory.getConnection());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void añadirTresFam () {
+        try {
+            famDAO.insertarLote(mySQLFactory.getConnection());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

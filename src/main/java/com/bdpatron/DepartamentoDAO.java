@@ -7,9 +7,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class DepartamentoDAO implements DAO <Departamento> {
     
+    static Scanner teclado = new Scanner (System.in);
+
     @Override
     public Departamento get (long id, Connection con) {
         Departamento dept = new Departamento();
@@ -50,5 +53,24 @@ public class DepartamentoDAO implements DAO <Departamento> {
             e.printStackTrace();
         }
         return lista;
+    }
+
+    public void insertarLote (Connection con) {
+        try {
+            PreparedStatement ps = con.prepareStatement("INSERT INTO dept (deptno, dname, loc) VALUES (?, ?, ?);" , ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            for (int i = 0; i < 3; i++) {
+                System.out.println("Inserte número departamento: ");
+                ps.setInt(1, Integer.parseInt(teclado.nextLine()));
+                System.out.println("Inserte nombre departamento: ");
+                ps.setString(2, teclado.nextLine());
+                System.out.println("Inserte localidad departamento: ");
+                ps.setString(3, teclado.nextLine());
+                ps.addBatch();
+            }
+            ps.executeBatch();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
     }
 }

@@ -7,9 +7,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class ProyectoDAO implements DAO <Proyecto> {
     
+    static Scanner teclado = new Scanner (System.in);
+
     @Override
     public Proyecto get (long id, Connection con) {
         Proyecto proy = new Proyecto();
@@ -54,5 +57,27 @@ public class ProyectoDAO implements DAO <Proyecto> {
             e.printStackTrace();
         }
         return lista;
+    }
+
+    public void insertarLote (Connection con) {
+        try {
+            PreparedStatement ps = con.prepareStatement("INSERT INTO proyectos (pcode, pname, descp, pres, deptno) VALUES (?, ?, ?, ?, ?);" , ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            for (int i = 0; i < 3; i++) {
+                System.out.println("Inserte número proyecto: ");
+                ps.setInt(1, Integer.parseInt(teclado.nextLine()));
+                System.out.println("Inserte nombre proyecto: ");
+                ps.setString(2, teclado.nextLine());
+                System.out.println("Inserte descripción proyecto: ");
+                ps.setString(3, teclado.nextLine());
+                System.out.println("Inserte presupuesto proyecto: ");
+                ps.setFloat(4, Float.parseFloat(teclado.nextLine()));
+                System.out.println("Inserte número departamento: ");
+                ps.setInt(5, Integer.parseInt(teclado.nextLine()));
+                ps.addBatch();
+            }
+            ps.executeBatch();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
     }
 }

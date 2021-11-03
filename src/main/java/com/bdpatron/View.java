@@ -28,7 +28,11 @@ public class View {
         System.out.println("20) Mostrar vistas jefes");
         System.out.println("21) Mostrar número de jefes");
         System.out.println("22) Mostrar nombre de empleado por empno");
-        System.out.println("23) Salir");
+        System.out.println("23) Añadir 3 empleados");
+        System.out.println("24) Añadir 3 departamentos");
+        System.out.println("25) Añadir 3 proyectos");
+        System.out.println("26) Añadir 3 familiares");
+        System.out.println("27) Salir");
         int opc = Integer.parseInt(teclado.nextLine());
         return opc;
     }
